@@ -1,0 +1,23 @@
+[project]
+name = "nutrifit-ai-backend"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.34",
+    "google-adk>=1.0.0",
+    "pydantic>=2.10",
+    "sse-starlette>=2.0",
+    "python-dotenv>=1.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "httpx>=0.28",
+    "pytest-asyncio>=0.25",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
