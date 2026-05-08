@@ -1,4 +1,4 @@
-# NutriFit AI — Technical Documentation
+# NutriFit AI
 
 **NutriFit AI** is a full-stack web application that analyzes a user's daily nutrition and physical training through a pipeline of five specialized AI agents. The user can dictate or type what they ate and how they trained, then receive a complete analysis with personalized recommendations from a sports nutrition perspective.
 
@@ -193,7 +193,7 @@ Runs the complete analysis pipeline. Returns a Server-Sent Events stream with pr
 
 ```json
 {
-  "transcript": "He comido arroz con pollo y he entrenado press banca 4x10 a 80kg",
+  "transcript": "I ate rice with chicken and trained bench press 4x10 at 80kg",
   "user_profile": {
     "weight_kg": 78,
     "height_cm": 178,
@@ -212,10 +212,10 @@ Progress events:
 
 ```text
 event: progress
-data: {"agent": "voice_intake_agent", "message": "Parseando entrada de voz..."}
+data: {"agent": "voice_intake_agent", "message": "Parsing voice input..."}
 
 event: progress
-data: {"agent": "nutrition_researcher_agent", "message": "Investigando valores nutricionales..."}
+data: {"agent": "nutrition_researcher_agent", "message": "Researching nutrition values..."}
 ```
 
 Final event:
@@ -225,10 +225,10 @@ event: complete
 data: {
   "intake": {
     "meals": [
-      {"name": "arroz con pollo", "is_recipe": true, "estimated_quantity": "1 plato", "raw_text": "arroz con pollo"}
+      {"name": "rice with chicken", "is_recipe": true, "estimated_quantity": "1 plate", "raw_text": "rice with chicken"}
     ],
     "exercises": [
-      {"name": "press banca", "details": "4 series de 10 a 80kg", "duration_minutes": null, "raw_text": "press banca 4x10 a 80kg"}
+      {"name": "bench press", "details": "4 sets of 10 at 80kg", "duration_minutes": null, "raw_text": "bench press 4x10 at 80kg"}
     ],
     "date": "2026-04-10"
   },
