@@ -1,166 +1,174 @@
-# NutriFit AI — Guia de Usuario
+# NutriFit AI — User Guide
 
-## ¿Que es NutriFit AI?
+## What Is NutriFit AI?
 
-NutriFit AI es tu coach nutricional con inteligencia artificial. Dile por voz lo que has comido y entrenado hoy, y recibe al instante:
+NutriFit AI is an AI-powered nutrition and training coach. You tell it what you ate and how you trained today, either by voice or by typing, and it returns:
 
-- Un **analisis nutricional completo** de todo lo que has comido (calorias, proteinas, carbohidratos, grasas).
-- Un **analisis de tu entrenamiento** con calorias quemadas y volumen de trabajo.
-- **Graficos visuales** de tu distribucion de macros y balance calorico.
-- **Recomendaciones personalizadas** de un experto en nutricion deportiva.
+- A complete **nutrition analysis** of the foods you consumed: calories, protein, carbohydrates, and fat.
+- A **training analysis** with calories burned and workout volume.
+- **Visual charts** for macro distribution and calorie balance.
+- **Personalized recommendations** from a sports nutrition perspective.
 
-No necesitas buscar cada alimento en una base de datos ni calcular nada manualmente. Solo habla.
-
----
-
-## Pantalla por Pantalla
-
-### Pantalla: Inicio (Home)
-
-`[screenshot: pantalla principal con fondo oscuro, titulo "NutriFit AI" en grande con "Fit" en verde lima, boton circular de microfono verde en el centro, y campo de texto debajo]`
-
-Esta es la pantalla principal. Veras:
-- El **titulo** "NutriFit AI" en la parte superior.
-- Un **boton grande de microfono** verde en el centro.
-- Un **area de texto** donde aparece tu transcripcion (y donde puedes escribir directamente).
-- Botones de **"Limpiar"** y **"Analizar mi dia"**.
-
-#### Como usarla:
-
-1. **Pulsa el boton de microfono** (se pondra rojo mientras escucha).
-2. **Habla de forma natural**, como si le contaras a un amigo lo que has comido y entrenado. Por ejemplo:
-   > "He desayunado tostadas con aguacate y dos huevos. Para comer, una pechuga a la plancha con arroz. De entreno he hecho espalda: dominadas 4 series de 8 y remo con barra 4 series de 10 a 60 kilos."
-3. **Pulsa de nuevo el microfono** para parar la grabacion.
-4. **Revisa la transcripcion** en el area de texto. Puedes editarla si algo se transcribio mal.
-5. **Pulsa "Analizar mi dia"** y espera mientras los agentes procesan tu informacion.
-
-Veras un indicador de progreso con 5 pasos que te dice exactamente que esta haciendo el sistema.
-
-#### Boton de Perfil
-
-En la esquina superior derecha hay un boton **"Perfil"**. Pulsalo para introducir tus datos (peso, altura, edad, etc.) y que los calculos sean mas precisos.
+You do not need to manually search for every food in a database or calculate workout metrics yourself. Just describe your day naturally.
 
 ---
 
-### Pantalla: Resultados (Dashboard)
+## Screen-by-Screen Guide
 
-`[screenshot: dashboard con fondo oscuro mostrando tres tarjetas en fila (grafico de macros circular, barra de balance calorico, gauge de calidad), debajo dos tablas (nutricion y entrenamiento), y al final tres cards de colores con consejos del experto]`
+### Home Screen
 
-Aqui ves todo el analisis de tu dia. Las secciones son:
+`[screenshot: dark home screen with the "NutriFit AI" title, "Fit" highlighted in lime green, a large circular green microphone button in the center, and a text input area underneath]`
 
-#### Graficos visuales (fila superior)
+This is the main screen. You will see:
 
-- **Distribucion de Macros**: Un grafico circular que muestra como se reparten tus macronutrientes (proteinas en azul, carbohidratos en amarillo, grasas en rojo). Incluye gramos y porcentaje de cada uno.
+- The **NutriFit AI** title at the top.
+- A large green **microphone button** in the center.
+- A **text area** where your transcript appears, and where you can also type manually.
+- **Clear** and **Analyze my day** action buttons.
 
-- **Balance Calorico**: Dos barras que comparan lo que has ingerido vs. lo que has quemado en el entrenamiento. Abajo aparece el **balance neto** (positivo = superavit, negativo = deficit).
+#### How to Use It
 
-- **Calidad Nutricional**: Un medidor de 0 a 100 que evalua la calidad general de tu alimentacion del dia (variedad, fibra, micronutrientes, etc.).
+1. Click the **microphone button**. It turns red while the app is listening.
+2. Speak naturally, as if you were telling a coach what you ate and how you trained. Example:
+   > "For breakfast I had avocado toast and two eggs. For lunch, grilled chicken breast with rice. For training I did back: pull-ups, 4 sets of 8, and barbell row, 4 sets of 10 at 60 kilos."
+3. Click the microphone again to stop recording.
+4. Review the transcript in the text area. You can edit anything that was transcribed incorrectly.
+5. Click **Analyze my day** and wait while the agents process the information.
 
-#### Tabla de Comidas
+You will see a five-step progress indicator showing exactly what the system is doing.
 
-`[screenshot: tabla con columnas Alimento, Porcion, Calorias, Proteina, Carbos, Grasa, con filas para cada comida y una fila de total resaltada en verde]`
+#### Profile Button
 
-Aqui ves cada cosa que has comido con sus valores nutricionales. Si un plato es una receta compuesta (como "arroz con pollo"), veras los ingredientes individuales debajo del nombre. La ultima fila muestra el **total del dia**.
-
-#### Tabla de Entrenamiento
-
-`[screenshot: tabla con columnas Ejercicio, Tipo, Duracion, Volumen, Intensidad, Calorias]`
-
-Cada ejercicio que has hecho con las calorias quemadas estimadas, el volumen total de trabajo (para fuerza) y la intensidad. La ultima fila muestra el **total de calorias quemadas**.
-
-#### Consejos del Experto
-
-Tres tarjetas con codigo de colores:
-
-- **Verde — "Lo que haces bien"**: Habitos positivos que estas manteniendo. El sistema reconoce tu esfuerzo con datos concretos.
-
-- **Amarilla — "Puedes mejorar"**: Areas donde hay margen de mejora, con explicacion de por que es importante.
-
-- **Azul — "Recomendaciones"**: Acciones concretas y especificas para el dia siguiente. No consejos genericos, sino cosas que puedes hacer ya.
-
-Ademas veras:
-- Una **nota global** (A+, B, C, etc.) que resume tu dia.
-- Un **banner con la accion prioritaria** — lo mas importante que deberias hacer mañana.
-- Una **nota motivacional** personalizada.
+The top-right **Profile** button opens a form where you can enter body and goal data such as weight, height, age, activity level, and fitness goal. This makes calorie and protein calculations more personalized.
 
 ---
 
-### Pantalla: Perfil
+### Results Dashboard
 
-`[screenshot: modal con fondo oscuro semi-transparente, formulario con campos de peso, altura, edad, sexo, nivel de actividad y objetivo, y botones Cancelar/Guardar]`
+`[screenshot: dark dashboard with three cards in the top row showing a macro pie chart, calorie balance bar, and quality gauge; below that, nutrition and training tables; at the bottom, colored expert advice cards]`
 
-Rellena tus datos para que los calculos sean mas precisos:
+This screen shows the full analysis of your day.
 
-- **Peso (kg)**: Tu peso actual.
-- **Altura (cm)**: Tu altura.
-- **Edad**: Tu edad en años.
-- **Sexo**: Masculino o Femenino.
-- **Nivel de actividad**: Desde Sedentario hasta Muy activo.
-- **Objetivo**: Recomposicion corporal, Ganar musculo o Perder grasa.
+#### Visual Summary
 
-Los datos se guardan en tu navegador (localStorage), asi que no necesitas rellenarlos cada vez.
+- **Macro Distribution**: A pie chart showing how your macronutrients are split between protein, carbohydrates, and fat.
+- **Calorie Balance**: Bars comparing calories eaten against calories burned during training. It also shows the net balance.
+- **Nutrition Quality**: A 0-to-100 score evaluating the overall quality of the day's nutrition.
 
----
+#### Food Table
 
-## Ejemplos de Uso
+`[screenshot: table with columns for Food, Serving, Calories, Protein, Carbs, and Fat, including a highlighted total row]`
 
-### Ejemplo 1 — Dia de fuerza
+This table shows each food or meal with its estimated nutrition values. If a dish is a recipe, such as rice with chicken, the table can show individual ingredients under the meal name. The final row shows the total for the day.
 
-> "He comido tortilla de patatas y un cafe con leche. De entreno: sentadillas 5x5 a 100kg, prensa 4x12 a 180kg, extensiones de cuadriceps 3x15 a 40kg."
+#### Training Table
 
-**Resultado esperado:**
-- ~1200 kcal ingeridas
-- Alto volumen de pierna (~15000 kg volumen total)
-- Recomendacion de aumentar proteina post-entreno y añadir mas comidas para cubrir el deficit
+`[screenshot: table with columns for Exercise, Type, Duration, Volume, Intensity, and Calories]`
 
-### Ejemplo 2 — Dia de cardio y dieta
+This table shows each exercise with estimated calories burned, workout volume for strength movements, duration, and intensity. The final row shows total training calories burned.
 
-> "Desayuno: yogur griego con frutos rojos. Comida: ensalada de atun con tomate y maiz. Cena: sopa de verduras. Entreno: 45 minutos de carrera a 8km/h."
+#### Expert Advice
 
-**Resultado esperado:**
-- ~1100 kcal ingeridas
-- ~400 kcal quemadas
-- Deficit calorico agresivo detectado
-- Recomendacion de subir calorias para no perder musculo, especialmente proteina
+The expert section is split into three color-coded cards:
 
-### Ejemplo 3 — Dia trampa
+- **Green - What you are doing well**: Positive habits backed by the day's data.
+- **Yellow - What you can improve**: Areas with room for improvement and why they matter.
+- **Blue - Recommendations**: Specific actions for the next day.
 
-> "He comido una hamburguesa doble con patatas fritas y un refresco. De cena, pizza margarita. No he entrenado."
+You will also see:
 
-**Resultado esperado:**
-- ~2800 kcal ingeridas
-- 0 kcal quemadas en ejercicio
-- Nota baja (C o D)
-- Consejo de no compensar al dia siguiente sino volver a la rutina normal
-- Recomendacion de hacer una sesion de entreno de fuerza al dia siguiente
+- An **overall score**, such as A, B+, or C.
+- A **priority action** banner with the most important thing to do tomorrow.
+- A short **motivational note** based on the analysis.
 
 ---
 
-## Preguntas Frecuentes
+### Profile Screen
 
-**¿Funciona en el movil?**
-Si. El microfono funciona en Chrome para Android. En iOS, el soporte de Web Speech API es limitado — usa el campo de texto como alternativa.
+`[screenshot: modal with dark translucent background, form fields for weight, height, age, sex, activity level, and goal, plus Cancel and Save buttons]`
 
-**¿Puedo escribir en vez de hablar?**
-Si. El area de texto bajo el microfono permite escribir directamente. No necesitas usar la voz si prefieres teclear.
+Fill in your profile to improve the accuracy of calculations:
 
-**¿Los datos se guardan?**
-Tu perfil (peso, altura, etc.) se guarda en el navegador (localStorage). Los analisis no se guardan entre sesiones — cada vez que cierras la app, los resultados se pierden. Si quieres guardar un analisis, haz una captura de pantalla.
+- **Weight (kg)**: Your current body weight.
+- **Height (cm)**: Your height.
+- **Age**: Your age in years.
+- **Sex**: Male or female.
+- **Activity level**: Sedentary, light, moderate, active, or very active.
+- **Goal**: Body recomposition, muscle gain, or fat loss.
 
-**¿Que hago si no me reconoce bien la voz?**
-- Habla claro, en un lugar sin ruido de fondo.
-- Usa frases simples y directas.
-- Puedes editar la transcripcion antes de pulsar "Analizar".
-- Prueba con Chrome en escritorio para mejor reconocimiento.
+The profile is saved in your browser's `localStorage`, so you do not need to enter it every time.
 
-**¿Cuanto tarda el analisis?**
-Normalmente entre 30 y 60 segundos. Los agentes buscan informacion nutricional en internet en tiempo real, lo que puede variar segun la conexion.
+---
 
-**¿Los datos nutricionales son exactos?**
-Los datos provienen de busquedas en internet en fuentes como USDA, BEDCA y MyFitnessPal. Son estimaciones razonables pero no sustituyen a un nutricionista profesional para diagnosticos medicos.
+## Usage Examples
 
-**¿Que navegadores son compatibles?**
-- **Chrome** (recomendado): Soporte completo de voz y todas las funcionalidades.
-- **Edge**: Soporte completo.
-- **Firefox**: Funciona sin reconocimiento de voz (usa el campo de texto).
-- **Safari**: Funcionalidad limitada.
+### Example 1 — Strength Day
+
+> "I ate a Spanish omelette and a coffee with milk. For training: squats 5x5 at 100kg, leg press 4x12 at 180kg, and leg extensions 3x15 at 40kg."
+
+**Expected result:**
+
+- Around 1200 kcal eaten.
+- High lower-body workout volume.
+- Recommendation to increase protein after training and add more food if the calorie deficit is too aggressive.
+
+### Example 2 — Cardio and Light Diet Day
+
+> "Breakfast: Greek yogurt with berries. Lunch: tuna salad with tomato and corn. Dinner: vegetable soup. Training: 45 minutes running at 8 km/h."
+
+**Expected result:**
+
+- Around 1100 kcal eaten.
+- Around 400 kcal burned.
+- Aggressive calorie deficit detected.
+- Recommendation to increase calories and protein to better preserve muscle.
+
+### Example 3 — High-Calorie Day
+
+> "I ate a double burger with fries and a soda. For dinner, margherita pizza. I did not train."
+
+**Expected result:**
+
+- Around 2800 kcal eaten.
+- 0 kcal burned through training.
+- Lower score, such as C or D.
+- Advice to return to the normal routine instead of overcompensating the next day.
+- Recommendation to do a strength session the next day.
+
+---
+
+## Frequently Asked Questions
+
+**Does it work on mobile?**
+
+Yes. The microphone works best in Chrome for Android. On iOS, Web Speech API support is limited, so use the text area as a fallback.
+
+**Can I type instead of speaking?**
+
+Yes. The text area under the microphone lets you type directly. Voice input is optional.
+
+**Is my data saved?**
+
+Your profile data, such as weight and height, is saved in your browser's `localStorage`. Analysis results are not saved between sessions. If you reload or close the app, the current result is lost.
+
+**What should I do if speech recognition is inaccurate?**
+
+- Speak clearly in a low-noise environment.
+- Use simple, direct sentences.
+- Edit the transcript before clicking Analyze.
+- Try Chrome on desktop for better recognition.
+
+**How long does the analysis take?**
+
+Usually 30 to 60 seconds. The agents use live web search for nutrition and training estimates, so timing depends on the model and network response.
+
+**Are the nutrition values exact?**
+
+No. They are reasonable estimates based on sources such as USDA, BEDCA, MyFitnessPal, or similar nutrition references. They are not a medical diagnosis and do not replace advice from a qualified professional.
+
+**Which browsers are supported?**
+
+- **Chrome**: recommended, best support for voice input.
+- **Edge**: good support.
+- **Firefox**: app works, but voice recognition support may be missing.
+- **Safari**: limited functionality, especially for voice input.

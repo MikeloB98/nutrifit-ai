@@ -1,28 +1,30 @@
-# NutriFit AI — Arquitectura del Sistema
+# NutriFit AI — System Architecture
 
-## Vision General
+## Overview
 
-NutriFit AI usa un **pipeline secuencial de 5 agentes de IA**, donde cada agente se especializa en una tarea y pasa su resultado al siguiente. Esta arquitectura modular permite:
+NutriFit AI uses a **sequential pipeline of five AI agents**. Each agent specializes in one task and passes its result to the next step. This modular architecture makes the system easier to understand, debug, extend, and improve.
 
-- Separar responsabilidades claramente.
-- Depurar cada agente de forma independiente.
-- Reemplazar o mejorar agentes individuales sin afectar al resto.
-- Escalar a mas agentes en el futuro (e.g., un agente de hidratacion o de suplementacion).
+The architecture is designed to:
+
+- Separate responsibilities clearly.
+- Debug each agent independently.
+- Replace or improve individual agents without rewriting the whole system.
+- Add more agents in the future, such as hydration, supplementation, or sleep recovery agents.
 
 ---
 
-## Diagrama del Pipeline
+## Pipeline Diagram
 
-```
+```text
 ┌─────────────────┐     ┌─────────────────────┐     ┌──────────────────────┐
 │  Voice Intake   │────→│ Nutrition Researcher │────→│  Training Analyst    │
-│  Agent          │     │ Agent                │     │  Agent               │
+│  Agent          │     │ Agent                │     │ Agent                │
 │                 │     │                      │     │                      │
-│ Input: texto    │     │ Input: MealItem[]    │     │ Input: ExerciseItem[]│
+│ Input: text     │     │ Input: MealItem[]    │     │ Input: ExerciseItem[]│
 │ Output:         │     │ Output:              │     │ Output:              │
 │  IntakeOutput   │     │  NutritionOutput     │     │  TrainingOutput      │
-│  (meals +       │     │  (analisis por       │     │  (calorias, volumen, │
-│   exercises)    │     │   alimento + total)  │     │   1RM, METs)         │
+│  (meals +       │     │  (food analysis +    │     │  (calories, volume,  │
+│   exercises)    │     │   daily total)       │     │   1RM, METs)         │
 └─────────────────┘     └─────────────────────┘     └──────────────────────┘
                                                               │
                         ┌─────────────────────┐     ┌────────┴─────────────┐
@@ -33,172 +35,205 @@ NutriFit AI usa un **pipeline secuencial de 5 agentes de IA**, donde cada agente
                         │  ConsolidatedTable  │     │  + TrainingOutput    │
                         │ Output:             │     │ Output:              │
                         │  AdvisorOutput      │     │  ConsolidatedTable   │
-                        │  (consejos, nota,   │     │  (balance, macros,   │
-                        │   recomendaciones)  │     │   score, charts)     │
+                        │  (advice, score,    │     │  (balance, macros,   │
+                        │   recommendations)  │     │   score, charts)     │
                         └─────────────────────┘     └──────────────────────┘
 ```
 
 ---
 
-## Agentes — Por que cada uno existe
+## Agents and Why They Exist
 
 ### Agent 1: Voice Intake
 
-**Problema:** La entrada del usuario es texto libre, desestructurado, potencialmente ambiguo.
+**Problem:** The user's input is free-form, unstructured, and potentially ambiguous.
 
-**Solucion:** Un agente dedicado a parsear y estructurar la entrada, separando comidas de ejercicios, detectando recetas compuestas, y extrayendo cantidades.
+**Solution:** A dedicated agent parses and structures the input. It separates meals from exercises, detects compound recipes, extracts quantities, and preserves the original text.
 
-**Sin tools:** Solo usa el LLM para comprension de lenguaje natural.
+**Tools:** None. It relies on the LLM for natural-language understanding.
 
 ### Agent 2: Nutrition Researcher
 
-**Problema:** Los valores nutricionales cambian segun la fuente, la preparacion, y la porcion. No queremos datos inventados.
+**Problem:** Nutrition values vary by source, preparation method, and serving size. The system should avoid purely invented nutrition data.
 
-**Solucion:** Un agente con acceso a Google Search que busca datos reales en internet, descompone recetas en ingredientes, y agrega valores de fuentes fiables.
+**Solution:** A specialized agent uses Google Search to find real-world nutrition references, decomposes recipes into ingredients, and aggregates values from trusted sources.
 
-**Tools:** `google_search` (Grounding de ADK).
+**Tools:** `google_search` through ADK grounding.
 
 ### Agent 3: Training Analyst
 
-**Problema:** Calcular gasto calorico requiere conocer METs, formulas de 1RM, y estimaciones por tipo de ejercicio.
+**Problem:** Calorie burn and performance metrics require exercise science assumptions such as MET values, strength volume, and one-rep max formulas.
 
-**Solucion:** Un agente especializado que busca datos de MET en internet y aplica formulas estandar de ciencia del deporte.
+**Solution:** A training-focused agent searches for MET values when needed and applies standard formulas such as the Epley 1RM estimate.
 
 **Tools:** `google_search`.
 
 ### Agent 4: Data Consolidator
 
-**Problema:** Los datos de nutricion y entrenamiento estan separados y necesitan cruzarse para generar un panorama completo.
+**Problem:** Nutrition and training data are useful separately, but the user needs a complete daily picture.
 
-**Solucion:** Un agente que combina ambas salidas, calcula el balance calorico, distribucion de macros, puntuacion de calidad, y prepara datos para graficos.
+**Solution:** This agent combines nutrition and training outputs, calculates calorie balance, macro distribution, protein per kg, nutrition quality score, and chart-ready data.
 
-**Sin tools:** Trabaja solo con los datos de los agentes anteriores.
+**Tools:** None. It works from previous agent outputs and optional user profile data.
 
 ### Agent 5: Expert Advisor
 
-**Problema:** Los numeros solos no son accionables. El usuario necesita interpretacion y recomendaciones concretas.
+**Problem:** Numbers alone are not actionable. The user needs interpretation and concrete next steps.
 
-**Solucion:** Un agente con personalidad de nutricionista deportivo que interpreta los datos consolidados y genera consejos especificos, motivadores y evidence-based.
+**Solution:** This agent behaves like a sports nutrition expert. It interprets the consolidated data and generates specific, motivating, evidence-based recommendations.
 
-**Sin tools:** Usa su system prompt como base de conocimiento experto.
+**Tools:** None. It uses its system prompt and the consolidated analysis as context.
 
 ---
 
-## Flujo de Datos entre Agentes
+## Data Flow Between Agents
 
-Cada agente en el pipeline de ADK (`SequentialAgent`) puede ver el historial completo de la sesion. Los agentes anteriores escriben su salida como contenido de texto en formato JSON, y los agentes posteriores pueden leerlo del contexto de la conversacion.
+The ADK `SequentialAgent` runs every agent in order. Earlier agents write their outputs as JSON text, and later agents can read the previous context from the session history.
 
 ```python
 pipeline_agent = SequentialAgent(
     name="nutrifit_pipeline",
     sub_agents=[
-        voice_intake_agent,          # → escribe IntakeOutput como JSON
-        nutrition_researcher_agent,  # → lee IntakeOutput, escribe NutritionOutput
-        training_analyst_agent,      # → lee IntakeOutput, escribe TrainingOutput
-        data_consolidator_agent,     # → lee NutritionOutput + TrainingOutput, escribe ConsolidatedTable
-        expert_advisor_agent,        # → lee ConsolidatedTable, escribe AdvisorOutput
+        voice_intake_agent,          # writes IntakeOutput as JSON
+        nutrition_researcher_agent,  # reads IntakeOutput and writes NutritionOutput
+        training_analyst_agent,      # reads IntakeOutput and writes TrainingOutput
+        data_consolidator_agent,     # reads NutritionOutput + TrainingOutput and writes ConsolidatedTable
+        expert_advisor_agent,        # reads ConsolidatedTable and writes AdvisorOutput
     ],
 )
 ```
 
-La validacion entre agentes se hace en `pipeline.py` al final del pipeline, parseando la salida de texto de cada agente a sus modelos Pydantic correspondientes.
+Validation happens in `pipeline.py` after the pipeline finishes. The backend parses each agent's text output and validates it against the corresponding Pydantic model.
+
+The mapping is:
+
+```text
+voice_intake_agent          -> IntakeOutput
+nutrition_researcher_agent  -> NutritionOutput
+training_analyst_agent      -> TrainingOutput
+data_consolidator_agent     -> ConsolidatedTable
+expert_advisor_agent        -> AdvisorOutput
+```
 
 ---
 
-## Como añadir un nuevo agente al pipeline
+## Adding a New Agent to the Pipeline
 
-1. **Crea el modelo Pydantic** en `backend/src/models/nuevo_agente.py`:
+1. **Create the Pydantic model** in `backend/src/models/new_agent.py`:
+
    ```python
    from pydantic import BaseModel
 
-   class NuevoOutput(BaseModel):
-       campo: str
-       valor: float
+   class NewOutput(BaseModel):
+       field: str
+       value: float
    ```
 
-2. **Crea el agente** en `backend/src/agents/nuevo_agente.py`:
+2. **Create the agent** in `backend/src/agents/new_agent.py`:
+
    ```python
    from google.adk import Agent
    from src.config import get_model_name
-   from src.models.nuevo_agente import NuevoOutput
+   from src.models.new_agent import NewOutput
 
-   nuevo_agent = Agent(
-       name="nuevo_agent",
+   new_agent = Agent(
+       name="new_agent",
        model=get_model_name(),
-       instruction="Tu system prompt aqui...",
-       output_schema=NuevoOutput,
+       instruction="Your system prompt here...",
+       output_schema=NewOutput,
    )
    ```
 
-3. **Añade el agente al pipeline** en `backend/src/pipeline.py`:
+3. **Add the agent to the pipeline** in `backend/src/pipeline.py`:
+
    ```python
-   from src.agents.nuevo_agente import nuevo_agent
+   from src.agents.new_agent import new_agent
 
    pipeline_agent = SequentialAgent(
        name="nutrifit_pipeline",
-       sub_agents=[..., nuevo_agent],  # añadir al final o donde corresponda
+       sub_agents=[..., new_agent],  # add it at the appropriate point
    )
    ```
 
-4. **Añade el parser** en la funcion `_parse_agent_outputs` de `pipeline.py`:
+4. **Add the parser** in `_parse_agent_outputs` in `pipeline.py`:
+
    ```python
-   ("nuevo_agent", "nuevo_key", NuevoOutput),
+   ("new_agent", "new_key", NewOutput),
    ```
 
-5. **Actualiza el frontend** para mostrar los datos del nuevo agente en el dashboard.
+5. **Update the frontend** if the new agent produces data that should be shown in the dashboard.
 
 ---
 
-## Como cambiar el modelo LLM
+## Changing the LLM Model
 
-### Opcion 1: Cambiar el modelo de Gemini
+### Option 1: Change the Gemini Model
 
-Edita `.env`:
+Edit `.env`:
+
 ```env
 GEMINI_MODEL=gemini-2.5-pro
 ```
 
-### Opcion 2: Usar un modelo open source
+### Option 2: Use an Open-Source Model
 
-1. Instala LiteLLM: `cd backend && uv add litellm`
-2. Edita `.env`:
+1. Install LiteLLM:
+
+   ```bash
+   cd backend
+   uv add litellm
+   ```
+
+2. Edit `.env`:
+
    ```env
    LLM_PROVIDER=litellm
    LITELLM_MODEL=ollama/llama3.1
    LITELLM_BASE_URL=http://localhost:11434
    ```
-3. Adapta `config.py` para instanciar el modelo via LiteLLM en vez de directamente.
 
-**Nota:** Los agentes que usan `google_search` (Agent 2 y 3) dependen de Gemini para el Grounding. Si cambias a un modelo open source, necesitaras reemplazar `google_search` por otra herramienta de busqueda (e.g., SerpAPI, Tavily).
+3. Adapt the model configuration if needed for the selected provider.
+
+Important note: the agents that use `google_search`, currently Nutrition Researcher and Training Analyst, depend on Gemini/ADK grounding. If you switch to a local or open-source model, you need to replace `google_search` with another search tool such as SerpAPI, Tavily, or a custom retrieval service.
 
 ---
 
-## Decisiones de Diseño
+## Design Decisions
 
-### ¿Por que Google ADK?
+### Why Google ADK?
 
-- Orquestacion nativa de agentes con `SequentialAgent`, `ParallelAgent`.
-- Integracion directa con Gemini y Google Search (Grounding).
-- Gestion de sesiones integrada (`InMemorySessionService`).
-- Soporte para `output_schema` que fuerza salida estructurada.
+- Native agent orchestration through `SequentialAgent` and `ParallelAgent`.
+- Direct integration with Gemini and Google Search grounding.
+- Built-in session handling through `InMemorySessionService`.
+- Support for structured output through `output_schema`.
 
-### ¿Por que Pydantic v2?
+### Why Pydantic v2?
 
-- Validacion de datos estricta y rapida entre agentes.
-- Serializacion/deserializacion JSON nativa.
-- Integracion con FastAPI para validacion de requests/responses.
-- `model_dump()` y `model_validate()` para conversion facil.
+- Strict and fast data validation between agents.
+- Native JSON serialization and deserialization.
+- Good integration with FastAPI request and response models.
+- Convenient `model_dump()` and `model_validate()` APIs.
 
-### ¿Por que SSE en vez de WebSockets?
+### Why SSE Instead of WebSockets?
 
-- **Unidireccional:** El flujo es servidor → cliente (progreso del pipeline). No necesitamos bidireccionalidad.
-- **Simplicidad:** SSE funciona sobre HTTP estandar, no requiere upgrade de protocolo.
-- **Compatibilidad:** Funciona con proxies, load balancers y CDNs sin configuracion especial.
-- **Reconexion automatica:** El EventSource del navegador reconecta automaticamente si se pierde la conexion.
+- **One-way communication:** The flow is backend to frontend for pipeline progress. The app does not need bidirectional messaging.
+- **Simplicity:** SSE works over standard HTTP and does not require a protocol upgrade.
+- **Compatibility:** SSE works well with common proxies, load balancers, and deployment setups.
+- **Automatic reconnection:** Browser EventSource can reconnect automatically, although this frontend currently parses the stream manually from `fetch`.
 
-### ¿Por que separar en 5 agentes en vez de usar uno solo?
+### Why Five Agents Instead of One?
 
-- **Especializacion:** Cada agente tiene un system prompt optimizado para su tarea.
-- **Debugging:** Si los datos nutricionales estan mal, sabes que es el Agent 2.
-- **Paralelizacion futura:** Agent 2 y 3 podrian ejecutarse en paralelo (no dependen entre si).
-- **Reusabilidad:** Cada agente puede usarse de forma independiente en otros contextos.
+- **Specialization:** Each agent has a focused system prompt for one type of reasoning.
+- **Debugging:** If nutrition values are wrong, inspect the Nutrition Researcher agent. If training estimates are wrong, inspect the Training Analyst agent.
+- **Future parallelization:** Nutrition and training analysis could eventually run in parallel because they both depend mainly on the intake output.
+- **Reusability:** Each agent can be improved or reused independently.
+
+---
+
+## Important Runtime Notes
+
+- `run_pipeline_streaming()` creates a fresh `InMemorySessionService` per request to avoid cross-request context contamination.
+- Agent outputs are captured as text and parsed as JSON after the ADK run finishes.
+- `_try_parse_json()` handles common LLM formatting issues, such as JSON wrapped in Markdown code fences.
+- If parsing fails, the backend stores the raw output and parse error for that agent.
+- The frontend currently assumes the final result has the expected validated shape, so frontend error handling could be improved for parse-error cases.
