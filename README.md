@@ -6,6 +6,8 @@
 [Voice/Text] -> Agent 1 (Voice Intake) -> Agent 2 (Nutrition Researcher) -> Agent 3 (Training Analyst) -> Agent 4 (Data Consolidator) -> Agent 5 (Expert Advisor)
 ```
 
+For a deeper explanation of the system design, see [ARCHITECTURE.md](ARCHITECTURE.md).
+
 ---
 
 ## Prerequisites
@@ -76,6 +78,18 @@ chmod +x run.sh
 cd backend
 uv run pytest tests/ -v
 ```
+
+### Baseline Verification
+
+Run these checks before opening a pull request and after changes that touch the backend, frontend, dependencies, or shared API contracts:
+
+```bash
+cd backend && uv run pytest tests/ -v
+cd frontend && npm run lint
+cd frontend && npm run build
+```
+
+The backend suite includes live AI pipeline coverage that is skipped unless `GOOGLE_API_KEY` is configured.
 
 ---
 
@@ -158,13 +172,9 @@ nutrifit-ai/
 │   │   └── api/
 │   │       └── client.ts              # HTTP client with SSE parsing
 │   └── tailwind.config.ts
-├── docs/
-│   ├── README.md                      # Technical documentation
-│   ├── GUIDE.md                       # User guide
-│   ├── ARCHITECTURE.md                # Architecture documentation
-│   ├── CODEBASE_OVERVIEW.md           # Full codebase overview
-│   └── AI_INTERVIEW_BRIEF.md          # Interview-focused AI summary
 ├── .env.example                       # Environment variable template
+├── ARCHITECTURE.md                    # Public architecture overview
+├── CHANGELOG.md                       # Public changelog
 ├── Makefile                           # Quick commands for install, dev, and test
 └── run.sh                             # One-command startup script
 ```

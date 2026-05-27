@@ -8,6 +8,13 @@ interface MacroChartProps {
 
 const COLORS = ["#60a5fa", "#fbbf24", "#f87171"];
 
+function formatMacroTooltip(value: unknown) {
+  const numericValue = typeof value === "number" ? value : Number(value);
+  const displayValue = Number.isFinite(numericValue) ? numericValue.toFixed(1) : String(value);
+
+  return [`${displayValue}g`, ""];
+}
+
 export function MacroChart({ protein, carbs, fat }: MacroChartProps) {
   const data = [
     { name: "Proteinas", value: protein, color: COLORS[0] },
@@ -47,7 +54,7 @@ export function MacroChart({ protein, carbs, fat }: MacroChartProps) {
                   borderRadius: "8px",
                   fontSize: "12px",
                 }}
-                formatter={(value: number) => [`${value.toFixed(1)}g`, ""]}
+                formatter={formatMacroTooltip}
               />
             </PieChart>
           </ResponsiveContainer>
